@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class Uppercase implements Rule
+class Telefone implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,7 +25,11 @@ class Uppercase implements Rule
      */
     public function passes($attribute, $value)
     {
-        return strtoupper($value) === $value;
+        $telefoneResidencial = preg_match('/^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/', $value);
+
+        $telefoneCelular = preg_match('/^\([1-9]{2}\) ([1-9])[0-9]{3}\-[0-9]{4}$/', $value);
+
+        return $telefoneResidencial || $telefoneCelular ? true : false;
     }
 
     /**
@@ -35,6 +39,6 @@ class Uppercase implements Rule
      */
     public function message()
     {
-        return 'As letras devem ser maíusculas';
+        return 'Esse telefone não é válido';
     }
 }

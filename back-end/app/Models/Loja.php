@@ -17,4 +17,9 @@ class Loja extends Model
         'nome',
         'cnpj'
     ];
+
+    public function setLoja($info)
+    {
+        return $this->create($info);
+    }
 }

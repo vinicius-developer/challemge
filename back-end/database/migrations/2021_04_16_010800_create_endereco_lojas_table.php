@@ -18,6 +18,7 @@ class CreateEnderecoLojasTable extends Migration
             $table->unsignedInteger('id_lojas');
             $table->string('logradouro', 80);
             $table->unsignedMediumInteger('numero');
+            $table->string('complemento', 50)->nullable();
             $table->char('cep', 8);
             $table->string('bairro', 80);
             $table->string('cidade', 80);

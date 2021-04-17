@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\Lojas;
 
+use App\Rules\Cep;
+use App\Rules\Cnpj;
+use App\Rules\OnlyNumbers;
 use App\Rules\Uppercase;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -26,11 +29,11 @@ class LojaCreateRequest extends FormRequest
     {
         return [
             "nome" => ['max:100', 'required'],
-            "cnpj" => ['cnpj', 'required'],
+            "cnpj" => [new Cnpj, 'required'],
             "endereco" => ['required'],
             "endereco.logradouro" => ['required', 'max:80'],
-            "endereco.numero" => ['required', 'regex:/[0-9]/'],
-            "endereco.cep" => ['required', 'formato_cep'],
+            "endereco.numero" => ['required', new OnlyNumbers()],
+            "endereco.cep" => ['required', new Cep()],
             "endereco.bairro" => ['required', 'max:80'],
             "endereco.cidade" => ['required', 'max:80'],
             "endereco.UF" => ['required', 'max:2', 'min:2', new Uppercase]  
@@ -49,7 +52,7 @@ class LojaCreateRequest extends FormRequest
             'logradouro.max' => "logradouro muito grande pro favor entrar em contato",
             'numero.required' => 'É necessario informar um numero', 'numero.regex' => 'não possui formato válido',
             'cep.required' => 'É necessário informar um CEP',
-            'cep.formato_cep' => 'cep possui formato invaludo',
+            'cep.formato_cep' => 'não possuí formato valído',
             'bairro.required' => 'É necessário informar um bairro',
             'bairro.max' => 'nome do bairro muito grande por favor entrar em contado', 
             'cidade.required' => 'É necessério informar uma cidade',

@@ -14,7 +14,7 @@ class AlterEnderecosIdLojadForeign extends Migration
     public function up()
     {
         Schema::table('endereco_lojas', function (Blueprint $table) {
-            $table->foreign('id_lojas')->references('id_lojas')->on('lojas');
+            $table->foreign('id_lojas')->references('id_lojas')->on('lojas')->onDelete('cascade');
         });
     }
 

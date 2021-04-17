@@ -15,10 +15,18 @@ class EnderecoLoja extends Model
 
     protected $fillable = [
         'id_lojas',
+        'logradouro',
         'rua',
+        'numero',
+        'complemento',
         'cep',
         'bairro',
         'cidade',
         'UF',
     ];
+
+    public function setEndereco($info)
+    {
+        return $this->create($info);
+    }
 }

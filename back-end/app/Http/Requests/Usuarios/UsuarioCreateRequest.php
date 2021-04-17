@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Usuarios;
 
+use App\Rules\OnlyNumbers;
 use App\Rules\Password;
+use App\Rules\Telefone;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UsuarioCreateRequest extends FormRequest
@@ -25,12 +27,12 @@ class UsuarioCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_lojas' => ["required", "exists:lojas", "regex:/[0-9]/" ] ,
+            'id_lojas' => ["required", "exists:lojas", new OnlyNumbers() ] ,
             'nome' => ["required", "max:100"] ,
             'email' => ["required","max:100","email:rfc,dns"] ,
             'senha' => [new Password, 'required', 'confirmed'] ,
             'telefones' => ["required"],
-            'telefones.*' => ["required"]
+            'telefones.*' => ["required", new Telefone() ]
         ];
     }
 
@@ -52,7 +54,7 @@ class UsuarioCreateRequest extends FormRequest
             se não for possísvel entre em contado",
             "email.email" => "esse e-mail não é valido",
             "senha.required" => "É necessário informar uma senha",
-            "senha.password_confirmation" => "As duas senha precisam ser iguais",
+            "senha.confirmed" => "As duas senha precisam ser iguais",
             "telefone.required" => "É necessario informar o item telefone",
         ];
     }

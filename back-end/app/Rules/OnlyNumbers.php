@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class Uppercase implements Rule
+class OnlyNumbers implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,7 +25,7 @@ class Uppercase implements Rule
      */
     public function passes($attribute, $value)
     {
-        return strtoupper($value) === $value;
+        return preg_match('/[0-9]/', $value);
     }
 
     /**
@@ -35,6 +35,6 @@ class Uppercase implements Rule
      */
     public function message()
     {
-        return 'As letras devem ser maíusculas';
+        return 'Este :attribute possuí caracteres inválidos';
     }
 }

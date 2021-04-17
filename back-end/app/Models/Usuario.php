@@ -14,14 +14,18 @@ class Usuario extends Model
     protected $primaryKey = 'id_usuarios';
 
     protected $fillable = [
-        "id_loja",
+        "id_lojas",
         "nome",
         "email",
         "senha"
     ];
 
     protected $hidden = [
-        "email",
         "senha"
     ];
+
+    public function setUsuario($info)
+    {
+        return $this->create($info);
+    }
 }

@@ -30,5 +30,5 @@ Route::prefix('loja')->group(function () {
 });
 
 Route::prefix('helpers')->group(function () {
-    Route::get('endereco/{cep}', [ViaCepController::class, 'get_endereco']);
+    Route::get('endereco', [ViaCepController::class, 'get_endereco']);
 });
