@@ -1,6 +1,4 @@
-# challenge
-
-###Olá Obrigado por baixar meu repositório!
+# Olá Obrigado por baixar meu repositório!
 
 Esse repositório possui duas pastas uma delas e o back-end e a outra o front-end
 
