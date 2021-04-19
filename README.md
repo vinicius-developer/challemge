@@ -1,6 +1,6 @@
 # Olá Obrigado por baixar meu repositório!
 
-Esse repositório possui duas pastas uma delas e o back-end e a outra o front-end
+Esse repositório possui duas pastas uma delas é o back-end e a outra o front-end
 
 Para o repositório funcionar corretamente peço que siga o seguintes paços:
 
