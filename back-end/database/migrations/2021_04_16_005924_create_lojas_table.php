@@ -15,8 +15,8 @@ class CreateLojasTable extends Migration
     {
         Schema::create('lojas', function (Blueprint $table) {
             $table->increments('id_lojas');
-            $table->string('nome', 100);
-            $table->char('cnpj', 14)->unique();
+            $table->string('nome', 100)->unique();
+            $table->char('cnpj', 18)->unique();
             $table->timestamps();
         });
     }

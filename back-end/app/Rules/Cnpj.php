@@ -2,13 +2,11 @@
 
 namespace App\Rules;
 
-use App\Traits\ClanerStrings;
 use Illuminate\Contracts\Validation\Rule;
 
 class Cnpj implements Rule
 {
 
-    use ClanerStrings;
 
     /**
      * Create a new rule instance.
@@ -29,7 +27,7 @@ class Cnpj implements Rule
      */
     public function passes($attribute, $value)
     {
-        $c = $this->sanitize($value);
+        $c = preg_replace('/[^0-9]/', '', $value);
 
         if (mb_strlen($c) != 14 || preg_match("/^{$c[0]}{14}$/", $c)) {
             return false;

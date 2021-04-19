@@ -22,4 +22,12 @@ class Loja extends Model
     {
         return $this->create($info);
     }
+
+    public function getLojas()
+    {
+        return $this->select(
+            'id_lojas',
+            'nome'
+        );
+    }
 }

@@ -28,8 +28,8 @@ class LojaCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            "nome" => ['max:100', 'required'],
-            "cnpj" => [new Cnpj, 'required'],
+            "nome" => ['max:100', 'required', 'unique:lojas'],
+            "cnpj" => [new Cnpj, 'required', 'unique:lojas'],
             "endereco" => ['required'],
             "endereco.logradouro" => ['required', 'max:80'],
             "endereco.numero" => ['required', new OnlyNumbers()],
@@ -43,23 +43,24 @@ class LojaCreateRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome.max:100' => 'Este nome é muito grande,
-            por favor entrar em contato', 
+            'nome.unique' => 'Este nome já existe por favor insira outra para
+            melhorar a identificaçã',
+            'nome.max:100' => 'Este nome é muito grande, por favor entrar em contato', 
             'nome.required' => 'É necessário inserir um nome',
             'cnpj.cnpj' => 'CNPJ inválido',
             'cnpj.required' => "É necessário informar um CNPJ",
-            'logradouro.required' => 'É necessário informar um logradouro',
-            'logradouro.max' => "logradouro muito grande pro favor entrar em contato",
-            'numero.required' => 'É necessario informar um numero', 'numero.regex' => 'não possui formato válido',
-            'cep.required' => 'É necessário informar um CEP',
-            'cep.formato_cep' => 'não possuí formato valído',
-            'bairro.required' => 'É necessário informar um bairro',
-            'bairro.max' => 'nome do bairro muito grande por favor entrar em contado', 
-            'cidade.required' => 'É necessério informar uma cidade',
-            'cidade.max:80' => 'nome da cidade muito grande por favor entrar em contado',
-            'UF.required' => 'É necessário informar a UF', 
-            'UF.max:2' => "UF inválida", 
-            'UF.min:2' => "UF inválida",
+            'cnpj.unique' => "Esse CNPJ já foi cadastrado",
+            'endereco.logradouro.required' => 'É necessário informar um logradouro',
+            'endereco.logradouro.max' => "logradouro muito grande pro favor entrar em contato",
+            'endereco.numero.required' => 'É necessario informar um numero', 'numero.regex' => 'não possui formato válido',
+            'endereco.cep.required' => 'É necessário informar um CEP',
+            'endereco.bairro.required' => 'É necessário informar um bairro',
+            'endereco.bairro.max' => 'nome do bairro muito grande por favor entrar em contado', 
+            'endereco.cidade.required' => 'É necessério informar uma cidade',
+            'endereco.cidade.max:80' => 'nome da cidade muito grande por favor entrar em contado',
+            'endereco.UF.required' => 'É necessário informar a UF', 
+            'endereco.UF.max:2' => "UF inválida", 
+            'endereco.UF.min:2' => "UF inválida",
         ];
     }
 }

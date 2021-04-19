@@ -16,7 +16,7 @@ class CreateTelefoneUsuariosTable extends Migration
         Schema::create('telefone_usuarios', function (Blueprint $table) {
             $table->id('id_telefone_usuarios');
             $table->unsignedInteger('id_usuarios');
-            $table->string('telefone', 11);
+            $table->string('telefone', 15);
             $table->timestamps();
         });
     }

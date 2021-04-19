@@ -3,27 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ViaCep\viaCepRequest;
+use App\Traits\ResponseMessage;
 use Illuminate\Support\Facades\Http;
 
 class ViaCepController extends Controller
 {
 
-    public function get_endereco(viaCepRequest $request) 
-    {  
-        $response = Http::get("https://viacep.com.br/ws/$request->cep/json")->json();
+    use ResponseMessage;
 
-        $endereco = array_slice($response, 0, 6);
-        
-        if(!array_key_exists('erro', $endereco)) {
-            return response()->json([
-                "status" => true,
-                "message" => $endereco
-            ]);
+    public function get_endereco($cep) 
+    {  
+        $response = Http::get("https://viacep.com.br/ws/$cep/json")->json();
+
+
+        if($response && !array_key_exists('erro', $response)) {
+            $endereco = array_slice($response, 0, 6);
+            return $this->formateMessageSuccess($endereco);
         } else {
-            return response()->json([
-                "status" => false,
-                "message" => "Não foi possível encontrar o endereço"
-            ], 422);
+            return $this->formateMessageError("Não foi possível encontrar o endereço", 422);
         }
         
     }

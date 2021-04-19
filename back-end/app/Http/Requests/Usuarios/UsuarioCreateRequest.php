@@ -27,9 +27,9 @@ class UsuarioCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_lojas' => ["required", "exists:lojas", new OnlyNumbers() ] ,
+            'id_lojas' => ['required', 'exists:lojas', new OnlyNumbers()],
             'nome' => ["required", "max:100"] ,
-            'email' => ["required","max:100","email:rfc,dns"] ,
+            'email' => ["required","max:100", "email:rfc,dns", 'unique:usuarios'] ,
             'senha' => [new Password, 'required', 'confirmed'] ,
             'telefones' => ["required"],
             'telefones.*' => ["required", new Telefone() ]
@@ -44,18 +44,19 @@ class UsuarioCreateRequest extends FormRequest
     public function messages()
     {
         return [
-            "id_lojas.required" => "É necessário indicar uma loja",
-            "id_lojas.exists" => "Está loja não é valida",
-            "id_lojas.regex" => "Tipo de dados inválido",
+            'id_lojas.required' => "É necessário informa a loja",
+            'id_lojas.exists' => "Loja não existe",
             "nome.required" => "É necessario informar um nome",
             "nome.max" => "Este nome é muito grande, pro favor utilizar abreviações",
-            "email.required" => "É necessario informa um e-mail",
+            "email.required" => "É necessario informar um e-mail",
             "email.max" => "Esta e-mail é muito grande, por favor utilizar,
             se não for possísvel entre em contado",
-            "email.email" => "esse e-mail não é valido",
+            "email.email" => "Esse e-mail não é valido",
+            "email.unique" => "Esse e-mail já foi cadastrado",
             "senha.required" => "É necessário informar uma senha",
             "senha.confirmed" => "As duas senha precisam ser iguais",
-            "telefone.required" => "É necessario informar o item telefone",
+            "telefones.required" => "É necessario informar o telefone",
+            "telefones.*.required" => "É necessario informar o telefone"
         ];
     }
 }

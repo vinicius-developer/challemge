@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Lojas\LojaCreateRequest;
+use App\Traits\ResponseMessage;
 use App\Models\EnderecoLoja;
 use App\Models\Loja;
-use App\Traits\ClanerStrings;
 use Exception;
 
 class LojaController extends Controller
 {
-    use ClanerStrings;
+    use ResponseMessage;
 
     private $tableLojas, $tableEnderecos;
 
@@ -24,12 +24,13 @@ class LojaController extends Controller
     {
         $infoLoja = $request->only(['nome', 'cnpj']);
 
-        $infoLoja['cnpj'] = $this->onlyNumbers($infoLoja['cnpj']);
-
         try {
+
             $idLoja = $this->tableLojas->setLoja($infoLoja)->id_lojas;
+
         } catch(Exception $e) {
-            return response()->json(['status' => false, 'message' => 'Não foi possivel criar a loja'], 500);
+
+            return $this->formateMessageError('Não foi possivel criar a loja', 500);            
         }
 
         $response = $this->setEnderecoLoja($request->endereco, $idLoja);
@@ -38,20 +39,39 @@ class LojaController extends Controller
         
     }
 
+    public function list()
+    {
+
+        try {
+
+            $lojas = $this->tableLojas->getLojas()->get();
+
+        } catch(Exception $e) {
+            return $this->formateMessageError('Error na listagem de dados', 500);
+
+        }
+
+        return $this->formateMessageSuccess($lojas);
+
+    }
+
     private function setEnderecoLoja($endereco, $idLoja) 
     {
         $infoEndereco = $endereco;
 
-        $infoEndereco['cep'] = $this->onlyNumbers($infoEndereco['cep']);
-
         $infoEndereco['id_lojas'] = $idLoja;
 
         try {
+
             $this->tableEnderecos->setEndereco($infoEndereco);
+
         } catch(Exception $e) {
-            return response()->json(['status' => false, 'message' => 'não foi possivel registrar o endereco'], 500);
+
+            return $this->formateMessageError('Não foi possivel registrar o endereco', 500);            
+
         }
 
-        return response()->json(['status' => true, 'message' => 'registro criado com sucesso']);
+
+        return $this->formateMessageSuccess('Registro criado com sucesso');
     }
 }

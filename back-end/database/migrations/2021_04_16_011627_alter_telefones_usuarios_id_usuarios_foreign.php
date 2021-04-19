@@ -14,7 +14,7 @@ class AlterTelefonesUsuariosIdUsuariosForeign extends Migration
     public function up()
     {
         Schema::table('telefone_usuarios', function (Blueprint $table) {
-            $table->foreign('id_usuarios')->references('id_usuarios')->on('usuarios');
+            $table->foreign('id_usuarios')->references('id_usuarios')->on('usuarios')->onDelete('cascade');
         });
     }
 
